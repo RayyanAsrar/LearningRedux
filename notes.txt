@@ -69,7 +69,7 @@ which handles events based on the received action (event) type.
 -They should only calculate the new state value based on the state and action arguments
 -They are not allowed to modify the existing state. Instead, they must make immutable updates,
  by copying the existing state and making changes to the copied values.
- 
+ **IN SIMPLE “If this action happens, how should the state change?”
 --example
 const initialState = { value: 0 }
 function counterReducer(state = initialState, action) {
@@ -98,4 +98,8 @@ const selectCounterValue = state => state.value
 const currentValue = selectCounterValue(store.getState())
 console.log(currentValue)
 
-
+7.slice
+A slice is a bundle of:
+        -State (the data)
+        -Reducers (how the data changes)
+        -Actions (auto-generated for you)
