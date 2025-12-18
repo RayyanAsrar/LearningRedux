@@ -15,14 +15,14 @@ in your app need to access.
 --------Core Redux Concepts--------------------------------
 1. Store
 -The single centralized object that holds your entire application state.
+The store is created by passing in a reducer, and has a method called getState that returns the current state value:
 
-// Think of it like this:
-const store = {
-  counterValue: 0,
-  products: [],
-  user: {},
-  // ... all your app data
-}
+--example
+import { configureStore } from '@reduxjs/toolkit'
+const store = configureStore({ reducer: counterReducer })
+console.log(store.getState())
+// {value: 0}
+
 
 2. State
 -The actual data stored in the store. It's just a JavaScript object.
@@ -61,16 +61,41 @@ const addTodo = text => {
 
 
 4. Reducers
-Pure functions that take the current state and an action,
- then return a new state. They specify how the state changes.
+A reducer is a function that receives the current state and an action object,
+decides how to update the state if necessary, and returns the 
+new state: (state, action) => newState. You can think of a reducer as an event listener
+which handles events based on the received action (event) type.
+--RULES OF REDUCERS 
+-They should only calculate the new state value based on the state and action arguments
+-They are not allowed to modify the existing state. Instead, they must make immutable updates,
+ by copying the existing state and making changes to the copied values.
  
- // Simplified reducer concept
-function reducer(state, action) {
-  if (action.type === "ADD") {
-    return state + 1;
+--example
+const initialState = { value: 0 }
+function counterReducer(state = initialState, action) {
+  // Check to see if the reducer cares about this action
+  if (action.type === 'counter/increment') {
+    // If so, make a copy of `state`
+    return {
+      ...state,
+      // and update the copy with the new value
+      value: state.value + 1
+    }
   }
-  return state;
+  // otherwise return the existing state unchanged
+  return state
 }
+
 5. Dispatch
-The function you call to send an action to the store.
-dispatch(addTodo()); // This triggers the reducer
+The Redux store has a method called dispatch. The only way to update the state is to call store.dispatch()
+and pass in an action object. The store will run its reducer function and save the new state value inside,
+and we can call getState() to retrieve the updated value:
+
+6.Selectors
+Selectors are functions that know how to extract specific pieces of information from a store state value. As an application grows bigger, this can help avoid repeating logic as different parts of the app need to read the same data:
+example--
+const selectCounterValue = state => state.value
+const currentValue = selectCounterValue(store.getState())
+console.log(currentValue)
+
+
