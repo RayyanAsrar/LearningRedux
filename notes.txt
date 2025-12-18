@@ -1,0 +1,76 @@
+# = question
+* = answer
+- = bullet point
+------------------Redux and Redux toolkit------------------------
+#What is Redux?
+*Redux is a state management library for JavaScript applications. 
+Think of it as a centralized place to store data that multiple components 
+in your app need to access.
+
+#Why Use Redux?
+*Without Redux, in a React app:
+    -You pass props down multiple levels (prop drilling) 😫
+    -Siblings can't easily share data
+    -Managing complex state becomes messy
+--------Core Redux Concepts--------------------------------
+1. Store
+-The single centralized object that holds your entire application state.
+
+// Think of it like this:
+const store = {
+  counterValue: 0,
+  products: [],
+  user: {},
+  // ... all your app data
+}
+
+2. State
+-The actual data stored in the store. It's just a JavaScript object.
+
+3. Actions
+-An action is a plain JavaScript object that has a type field.
+You can think of an action as an event that describes something 
+that happened in the application.
+
+-The type field should be a string that gives this action a descriptive name,
+like "todos/todoAdded". We usually write that type string like "domain/eventName",
+where the first part is the feature or category that this action belongs to,
+ and the second part is the specific thing that happened.
+
+-An action object can have other fields with additional information 
+about what happened. By convention, we put that information in a field
+called payload.
+
+example-
+const addTodoAction = {
+  type: 'todos/todoAdded',
+  payload: 'Buy milk'
+}
+
+-Action Creators
+An action creator is a function that creates and returns an action object. 
+We typically use these so we don't have to write the action object by hand every time:
+example-
+const addTodo = text => {
+  return {
+    type: 'todos/todoAdded',
+    payload: text
+  }
+}
+
+
+
+4. Reducers
+Pure functions that take the current state and an action,
+ then return a new state. They specify how the state changes.
+ 
+ // Simplified reducer concept
+function reducer(state, action) {
+  if (action.type === "ADD") {
+    return state + 1;
+  }
+  return state;
+}
+5. Dispatch
+The function you call to send an action to the store.
+dispatch(addTodo()); // This triggers the reducer
