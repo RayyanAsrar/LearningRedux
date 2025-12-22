@@ -103,3 +103,8 @@ A slice is a bundle of:
         -State (the data)
         -Reducers (how the data changes)
         -Actions (auto-generated for you)
+
+
+- in main.jsx u have to wrap ta app component inside provider which will come from 
+react redux
+- also configure store

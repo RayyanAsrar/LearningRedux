@@ -6,16 +6,16 @@ const counterSlice=createSlice({
         counterValue:0
     },
     reducers:{
-        addTodo:(state,action)=>{
-            console.log("addTodo(line:10)",action,state)
+        increment:(state,action)=>{
+            console.log("increment(line:10)",action,state)
             state.counterValue +=1
         },
-        minusTodo:(state,action)=>{
+        decrement:(state,action)=>{
             state.counterValue -=1
         }
     }
 })
 const {reducer,actions}=counterSlice
 const CounterSlice=reducer
-const { addTodo,minusTodo }=actions
-export {CounterSlice,addTodo,minusTodo}
+const { increment,decrement }=actions
+export {CounterSlice,increment,decrement}
